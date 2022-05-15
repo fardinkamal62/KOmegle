@@ -1,5 +1,5 @@
 # KOmegle
-Omegle clone
+Omegle clone with NodeJS
 
 ## Built with
 - NodeJS
