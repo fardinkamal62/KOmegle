@@ -1,0 +1,86 @@
+body {
+  background-color: black;
+  color: white;
+  padding-bottom: 3rem;
+}
+
+#form {
+  background: black;
+  padding: 0.25rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  height: 3rem;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+}
+#input {
+  background-color: whitesmoke;
+  caret-color: transparent;
+  border: none;
+  padding: 0 1rem;
+  flex-grow: 1;
+  border-radius: 2rem;
+  margin: 0.25rem;
+}
+#input:focus {
+  outline: none;
+}
+#form > button {
+  background: #333;
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 3px;
+  outline: none;
+  color: #fff;
+}
+
+#messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#messages > li {
+  padding: 0.5rem 1rem;
+}
+#messages > li:nth-child(odd) {
+  background: #efefef;
+}
+
+.massege {
+  float: right;
+  padding: 15px;
+}
+/*mssge from next guy*/
+.round2 {
+  width: 25%;
+  border: 2px solid;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 10px;
+  border-width: 0px;
+}
+.txxt {
+  background-color: #e2eef5;
+}
+
+/*my mssge */
+.txt {
+  background-color: #1e90ff;
+}
+.round3 {
+  width: 25%;
+  border: 2px solid;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 10px;
+  border-width: 0px;
+}
+
+/*server mssge */
+.center {
+  text-align: center;
+}
