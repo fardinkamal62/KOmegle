@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <title>KOmegle</title>
+  </head>
+  <body class="bg-black text-white">
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-dark">
+      <div class="container-fluid">
+        <span class="navbar-brand h1" style="color: white; font-size: 30px"
+          >KOmegle</span
+        >
+        <span
+          class="translate-middle-y position-absolute"
+          style="color: white; top: 60px; font-size: small"
+          >Chat with strangers</span
+        >
+      </div>
+    </nav>
+
+    <!--  -->
+
+    <!-- message display -->
+    <br>
+    <div class="chat">
+        <div class="message"></div>
+      </div>
+      <p id="demo"></p>
+      <form id="form">
+    <!--  -->
+
+    <!-- form input -->
+    <form id="form" class="position-absolute">
+      <input id="input" autocomplete="off" onkeyup="key()" />
+      <button type="submit" id="button" disabled>Send</button>
+    </form>
+    <!--  -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function key() {
+        if (document.getElementById('input').value === '') {
+          document.getElementById('button').disabled = true;
+        } else {
+          document.getElementById('button').disabled = false;
+        }
+      }
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/main.js"></script>
+  </body>
+</html>
+
