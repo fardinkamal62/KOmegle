@@ -1,11 +1,10 @@
 body {
-  background-color: black;
-  color: white;
   padding-bottom: 3rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  Helvetica, Arial, sans-serif;
 }
 
 #form {
-  background: black;
   padding: 0.25rem;
   position: fixed;
   bottom: 0;
@@ -17,8 +16,7 @@ body {
   backdrop-filter: blur(10px);
 }
 #input {
-  background-color: whitesmoke;
-  caret-color: transparent;
+  background-color: #d2d2d2;
   border: none;
   padding: 0 1rem;
   flex-grow: 1;
@@ -33,7 +31,7 @@ body {
   border: none;
   padding: 0 1rem;
   margin: 0.25rem;
-  border-radius: 3px;
+  border-radius: 2rem;
   outline: none;
   color: #fff;
 }
@@ -54,33 +52,34 @@ body {
   float: right;
   padding: 15px;
 }
-/*mssge from next guy*/
+/*Message from other*/
 .round2 {
-  width: 25%;
-  border: 2px solid;
+  width: 45%;
   border-radius: 12px;
   padding: 10px;
   margin: 10px;
-  border-width: 0px;
-}
-.txxt {
-  background-color: #e2eef5;
 }
 
-/*my mssge */
-.txt {
-  background-color: #1e90ff;
+/*Others*/
+.txxt{
+  background-color:  #e2eef5;
 }
+
+/*My message*/
+.txt{
+  background-color: #0082FFA3;
+}
+
 .round3 {
-  width: 25%;
-  border: 2px solid;
   border-radius: 12px;
   padding: 10px;
   margin: 10px;
-  border-width: 0px;
 }
 
-/*server mssge */
 .center {
   text-align: center;
+}
+
+.dark-link, .dark-link:hover {
+  color: #333;
 }

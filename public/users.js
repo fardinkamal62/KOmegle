@@ -1,19 +1,19 @@
-var users = [[]];
+const users = [];
 
 // add user
 function join(id) {
-  for (var i = 0; i < users.length; i++) {
+  for (let i in users) {
     if (users[i].length < 2) {
       users[i].push(id);
-      users.push([]);
       return users[i][0];
     }
   }
+  users.push([id]);
 }
 
 // get current user
 function current(id) {
-  for (var i = 0; i < users.length; i++) {
+  for (let i in users) {
     if (users[i].includes(id)) {
       return users[i][0];
     }
@@ -22,7 +22,7 @@ function current(id) {
 
 //user leaves chat
 function leave(id) {
-  for (var i = 0; i < users.length; i++) {
+  for (let i in users) {
     if (users[i].includes(id)) {
       return users[i].splice(users[i].indexOf(id), 1);
     }

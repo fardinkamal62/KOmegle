@@ -7,16 +7,25 @@ const io = socketio(server);
 const format = require('./public/messages');
 const { join, current, users, leave } = require('./public/users');
 const cors = require('cors');
+const process = require('process');
+
+const memoryUsage = () => {
+  const used = process.memoryUsage().heapUsed / 1024 / 1024;
+  console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
+}
+setInterval(() => {
+  memoryUsage()
+}, 2000)
 
 app.use(express.static('public'));
 app.use(cors());
 
-// number of users
-var nou = 0;
-var id;
 // starting server
-// user connected
 io.on('connection', (socket) => {
+  // number of users
+  let nou = 0;
+  let id;
+  // on user connection
   socket.on('join', () => {
     id = join(socket.id);
     socket.join(id);
@@ -38,8 +47,9 @@ io.on('connection', (socket) => {
 
   // listen for msg
   socket.on('msg', (msg) => {
-    var idm = current(socket.id);
-    io.in(idm).emit('message', format('Stranger', msg));
+    memoryUsage()
+    const idm = current(socket.id);
+    io.in(idm).emit('message', format(socket.id, msg));
   });
 });
 
