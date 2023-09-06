@@ -1,9 +1,9 @@
 # KOmegle
-Omegle clone with NodeJS
+Omegle clone with MERN Stack
 
 ## Built with
+- ReactJS
 - NodeJS
-- ExpressJS
 - Socket.io
 
 ## Feature
