@@ -1,6 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import io from 'socket.io-client';
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
+
+import {Section, ToastNotification, TextInput, FormGroup, Button} from "@carbon/react";
+
+import {TopBar} from "./components/TopBar";
 
 const ENDPOINT = 'http://localhost:8000';
 const socket = io(ENDPOINT);
@@ -10,15 +14,14 @@ const App = () => {
 
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
-    const [serverMessages, setServerMessages] = useState([]);
+    const [serverMessages, setServerMessages] = useState("");
     const [room, setRoom] = useState(location.state);
-
-    useEffect(() => {
-        socket.emit('join', room);
-    }, []);
+    const [notification, setNotification] = useState(false);
+    const [serverNotification, setServerNotification] = useState(false);
 
     socket.on('server', (message) => {
-        setServerMessages([...serverMessages, message]);
+        setServerMessages(message);
+        setServerNotification(true);
     });
 
     socket.on('message', (message) => {
@@ -37,30 +40,61 @@ const App = () => {
         setMessage('')
     };
 
+    const toastNotification = (title, subtitle, caption, kind, role) => {
+        return <ToastNotification
+            aria-label="closes notification"
+            caption={caption}
+            onClose={function noRefCheck() {
+                setNotification(false)
+            }}
+            statusIconDescription="notification"
+            subtitle={subtitle}
+            title={title}
+            kind={kind}
+            role={role}
+            className="notification-container"
+            timeout={2000}
+            onCloseButtonClick={
+                function noRefCheck() {
+                    setNotification(false)
+                }
+            }/>
+    }
+
+    useEffect(() => {
+        socket.emit('join', room);
+    }, []);
+
     return (
-        <div>
-            <h1>KOmegle</h1>
-            <h4>Room id: {room}</h4>
-            <button><Link to='/'>New Game</Link></button>
-            <ul>
-                {messages.map((message, index) => (
-                    <li key={index}>{message}</li>
-                ))}
-            </ul>
-            <ul>
-                {serverMessages && <li>{serverMessages.map((message, index) =>{
-                    return <li key={index}>{message}</li>
-                })}</li>}
-            </ul>
-            <form>
-                <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                />
-                <button type="submit" onClick={(e) => sendMessage(e)}>Send</button>
-            </form>
-        </div>
+        <>
+            <TopBar title="Chat"/>
+            <Section style={{marginTop: "5%"}} className="container">
+                {notification && toastNotification("Room id copied", "", "", "success", "alert")}
+                {serverNotification && toastNotification("Server message", serverMessages, "", "info", "alert")}
+                <h3 style={{cursor: "pointer", marginBottom: "2%"}} onClick={
+                    () => {
+                        navigator.clipboard.writeText(room).then(
+                            () => setNotification(true)
+                        )
+                    }
+                }>Room id: <strong>{room}</strong></h3>
+                <ul>
+                    {messages.map((message, index) => (
+                        <li key={index}>{message}</li>
+                    ))}
+                </ul>
+                <FormGroup legendText="" style={{width: "50%"}}>
+                    <TextInput
+                        id="message"
+                        labelText="Message"
+                        placeholder="Enter your message"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                    />
+                    <Button style={{marginTop: "1%"}} onClick={(e) => sendMessage(e)}>Send</Button>
+                </FormGroup>
+            </Section>
+        </>
     );
 };
 

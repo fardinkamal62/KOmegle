@@ -2,9 +2,13 @@
   "name": "komegle-frontend",
   "version": "2.0.0",
   "private": true,
+  "includePaths": [
+    "node_modules"
+  ],
   "dependencies": {
-    "@shopify/polaris": "^11.14.0",
-    "@shopify/polaris-icons": "^7.8.1",
+    "@carbon/icons-react": "^11.26.0",
+    "@carbon/react": "^1.37.0",
+    "@carbon/styles": "^1.37.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -12,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
+    "sass": "^1.66.1",
     "sfcookies": "^1.0.2",
     "socket.io-client": "^4.6.1",
     "web-vitals": "^2.1.4"

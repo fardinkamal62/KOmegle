@@ -1,2 +1,6 @@
 /node_modules/
 /.idea
+
+frontend/node_modules/
+backend/node_modules/
+```

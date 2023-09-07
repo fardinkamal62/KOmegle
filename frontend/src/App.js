@@ -1,32 +1,30 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 
+import {Checkbox, Button, FormGroup, TextInput, Section, Heading} from '@carbon/react';
+import {TopBar} from "./components/TopBar";
+import {ArrowRight} from "@carbon/icons-react";
+
 const App = () => {
     const [room, setRoom] = useState('');
-
-    const joinRoom = (e) => {
-        e.preventDefault();
-    };
+    const [hasRoom, setHasRoom] = useState(false);
 
     return (
         <>
-            <div>
-                <h1>Welcome to KOmegle</h1>
-            </div>
-            <div>
-                <form>
-                    <input
-                        type="text"
-                        value={room}
-                        placeholder={'Enter room ID(optional)'}
-                        onChange={(e) => setRoom(e.target.value)}
-                    />
-                    <button type="submit" onClick={(e) => joinRoom(e)}>
-                        {<Link to={'/chat'}
-                               state={room}> {room !== '' ? `Join ${room}` : 'Join Random Room'}</Link>}
-                    </button>
-                </form>
-            </div>
+            <TopBar title='Homepage'/>
+            <Section className="centered container" style={{
+                marginTop: '5%'
+            }}>
+                <Heading>Welcome To KOmegle</Heading>
+                <FormGroup legendText="">
+                    <Checkbox labelText="Have room ID" checked={hasRoom} onChange={() => setHasRoom(!hasRoom)}
+                              id='roomIdCheck' className="centered"/>
+                    {hasRoom ? <TextInput labelText="Enter room ID" value={room}
+                                          onChange={(e) => setRoom(e.target.value)} id="roomId"/> : null}
+                </FormGroup>
+                <Button as={Link} to={'/chat'} size='sm' state={room} renderIcon={ArrowRight}
+                        style={{margin: '1%'}}>{room !== '' ? `Join ${room}` : 'Join Random Room'}</Button>
+            </Section>
         </>
     );
 };
