@@ -14,29 +14,30 @@ const App = () => {
 
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
-    const [serverMessages, setServerMessages] = useState("");
     const [room, setRoom] = useState(location.state);
     const [notification, setNotification] = useState(false);
-    const [serverNotification, setServerNotification] = useState(false);
+    const [user, setUser] = useState("");
 
     socket.on('server', (message) => {
-        setServerMessages(message);
-        setServerNotification(true);
+        setMessages([...messages, {message, user: "Server", type: "server"}]);
     });
 
     socket.on('message', (message) => {
         setMessages([...messages, message]);
+        goToBottom();
     });
 
     socket.on('roomID', (message) => {
-        setRoom(message);
+        const {room, user} = message;
+        setRoom(() => room);
+        setUser(() => user);
     });
 
     const sendMessage = (e) => {
         e.preventDefault();
         if (message === '') return null;
 
-        socket.emit('sendMessage', message);
+        socket.emit('sendMessage', {message, timestamp: Date.now(), user, type: "normal"});
         setMessage('')
     };
 
@@ -45,7 +46,7 @@ const App = () => {
             aria-label="closes notification"
             caption={caption}
             onClose={function noRefCheck() {
-                setNotification(false)
+                setNotification(false);
             }}
             statusIconDescription="notification"
             subtitle={subtitle}
@@ -56,21 +57,36 @@ const App = () => {
             timeout={2000}
             onCloseButtonClick={
                 function noRefCheck() {
-                    setNotification(false)
+                    setNotification(false);
                 }
             }/>
     }
 
+    const goToBottom = () => {
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth',
+        });
+    };
+
+    const messageTemplate = (message, index) => {
+        if (message.type === "server") {
+            return <li key={index}
+                       className="server-message">{message.message}</li>
+        }
+        return <li key={index}
+                   className={user === message.user ? "self-message" : "other-message"}>{message.message}</li>
+    }
+
     useEffect(() => {
         socket.emit('join', room);
-    }, []);
+    }, [room]);
 
     return (
         <>
             <TopBar title="Chat"/>
-            <Section style={{marginTop: "5%"}} className="container">
-                {notification && toastNotification("Room id copied", "", "", "success", "alert")}
-                {serverNotification && toastNotification("Server message", serverMessages, "", "info", "alert")}
+            {notification && toastNotification("Room id copied", "", "", "success", "alert")}
+            <Section style={{marginTop: "5%"}} className="container centered">
                 <h3 style={{cursor: "pointer", marginBottom: "2%"}} onClick={
                     () => {
                         navigator.clipboard.writeText(room).then(
@@ -78,18 +94,21 @@ const App = () => {
                         )
                     }
                 }>Room id: <strong>{room}</strong></h3>
-                <ul>
+            </Section>
+            <Section style={{marginTop: "5%"}} className="container">
+                <ul style={{display: "flex", flexDirection: "column"}}>
                     {messages.map((message, index) => (
-                        <li key={index}>{message}</li>
+                        messageTemplate(message, index)
                     ))}
                 </ul>
-                <FormGroup legendText="" style={{width: "50%"}}>
+                <FormGroup legendText="" style={{marginTop: '2%', marginBottom: "5%"}} className="centered">
                     <TextInput
                         id="message"
-                        labelText="Message"
-                        placeholder="Enter your message"
+                        labelText="Enter Your Message"
+                        placeholder="Press enter To Send"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' ? sendMessage(e) : null}
                     />
                     <Button style={{marginTop: "1%"}} onClick={(e) => sendMessage(e)}>Send</Button>
                 </FormGroup>

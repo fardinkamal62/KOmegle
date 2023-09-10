@@ -3,11 +3,41 @@
 $background-color: #424242;
 $color: #fff;
 
+body {
+    text-align: center;
+}
+
 .centered {
     display:flex;
     justify-content:center;
     align-items:center;
     flex-direction:column;
+}
+
+.self-message {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    max-width: 50%;
+    align-self: flex-start;
+}
+
+.other-message {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    max-width: 50%;
+    align-self: flex-end;
+}
+
+.server-message {
+    color: #a9a9a9;
+    padding: 10px;
+    margin: 10px;
+    max-width: 50%;
+    align-self: center;
 }
 
 .dark-mode {
@@ -19,6 +49,14 @@ $color: #fff;
     .cds--text-input {
         border-bottom: 1px solid $color;
     }
+
+    .self-message {
+        color: #000000;
+    }
+
+    .other-message {
+        color: #000000;
+    }
 }
 
 .container {
@@ -27,6 +65,6 @@ $color: #fff;
 }
 
 .notification-container {
-    left: 75%;
-    position: fixed;
+    right: 0;
+    position: absolute;
 }

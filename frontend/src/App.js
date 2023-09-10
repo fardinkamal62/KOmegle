@@ -17,7 +17,7 @@ const App = () => {
             }}>
                 <Heading>Welcome To KOmegle</Heading>
                 <FormGroup legendText="">
-                    <Checkbox labelText="Have room ID" checked={hasRoom} onChange={() => setHasRoom(!hasRoom)}
+                    <Checkbox labelText="I Have Room ID" checked={hasRoom} onChange={() => setHasRoom(!hasRoom)}
                               id='roomIdCheck' className="centered"/>
                     {hasRoom ? <TextInput labelText="Enter room ID" value={room}
                                           onChange={(e) => setRoom(e.target.value)} id="roomId"/> : null}

@@ -16,15 +16,15 @@ function TopBar({title}) {
     }, [darkMode]);
 
     return (
-        <Header aria-label="Platform Name">
+        <Header aria-label="Top Bar" style={{position: "sticky"}}>
             <HeaderName prefix="KOmegle" as={Link} to={'/'}>{title}</HeaderName>
             <HeaderGlobalBar>
-                {title === 'Chat' && <HeaderGlobalAction aria-label="Quit" as={Link} to={'/'}><Power/></HeaderGlobalAction>}
                 <HeaderGlobalAction aria-label="Dark Mode" onClick={() => {
                     setDarkMode(!darkMode);
                 }}>
                     {darkMode ? <Sun/> : <Moon/>}
                 </HeaderGlobalAction>
+                {title === 'Chat' && <HeaderGlobalAction aria-label="Quit" as={Link} to={'/'}><Power/></HeaderGlobalAction>}
             </HeaderGlobalBar>
         </Header>
     );

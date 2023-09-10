@@ -13,14 +13,20 @@ app.use(cors());
 
 const io = socketio(server, {cors: {origin: "*"}});
 
+const joinedRooms = new Set();
+
 io.on('connection', (socket) => {
     let id;
     socket.on('join', (roomID) => {
         id = roomID || socket.id;
 
         socket.join(id);
-        io.in(id).emit('server', 'A new member has joined');
-        io.in(id).emit('roomID', id);
+
+        if (!joinedRooms.has(socket.id)) {
+            socket.broadcast.to(id).emit('server', 'Someone Joined the Chat');
+            joinedRooms.add(socket.id);
+        }
+        io.to(socket.id).emit('roomID', {room: id, user: socket.id});
     });
 
     // Listen for messages from the client
@@ -30,7 +36,7 @@ io.on('connection', (socket) => {
 
     // Disconnect listener
     socket.on('disconnect', () => {
-        io.in(id).emit('server', 'A member has disconnected');
+        io.in(id).emit('server', 'Someone Left the Chat');
     });
 });
 
