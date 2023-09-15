@@ -40,6 +40,7 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(8000, () => {
-    console.log('Listening on port 8000');
+const PORT = env.PORT || 8000;
+server.listen(PORT, () => {
+    console.log('Listening on port ' + PORT);
 });
