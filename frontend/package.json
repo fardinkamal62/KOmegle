@@ -19,6 +19,7 @@
     "sass": "^1.66.1",
     "sfcookies": "^1.0.2",
     "socket.io-client": "^4.6.1",
+    "use-sound": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

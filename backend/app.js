@@ -6,9 +6,12 @@ const socketio = require('socket.io');
 const bodyParser = require('body-parser');
 const cookie = require('cookie-parser');
 const cors = require('cors');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 app.use(cookie());
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
 
 const io = socketio(server, {cors: {origin: "*"}});
@@ -40,7 +43,7 @@ io.on('connection', (socket) => {
     });
 });
 
-const PORT = env.PORT || 8000;
+const PORT = process.env.PORT || 8000;
 server.listen(PORT, () => {
-    console.log('Listening on port ' + PORT);
+    console.log(`Listening on port ${PORT}`);
 });
